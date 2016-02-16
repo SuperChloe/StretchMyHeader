@@ -131,7 +131,6 @@
                                 <connections>
                                     <outlet property="categoryLabel" destination="GHA-ec-Lbd" id="InP-Ms-cHv"/>
                                     <outlet property="headlineLabel" destination="ztq-MQ-U73" id="fLC-ww-8vf"/>
-                                    <segue destination="JEX-9P-axG" kind="show" identifier="showDetail" id="3g5-t3-D5n"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
