@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsItem: NSObject {
+struct NewsItem {
     
     enum Category: String {
         case World = "World"

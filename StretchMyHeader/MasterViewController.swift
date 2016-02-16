@@ -10,8 +10,9 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
+    @IBOutlet weak var dateLabel: UILabel!
     var detailViewController: DetailViewController? = nil
-    var objects = [AnyObject]()
+    var objects = [NewsItem]()
 
 
     override func viewDidLoad() {
@@ -21,6 +22,12 @@ class MasterViewController: UITableViewController {
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
+        
+        let currentDate = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+        var date = dateFormatter.stringFromDate(currentDate)
+        dateLabel.text = date
         
         let news1 = NewsItem(category: .World, headline: "Climate change protests, divestments meet fossil fuels realities")
         let news2 = NewsItem(category: .Europe, headline: "Scotland's 'Yes' leader says independence vote is 'once in a lifetime'")
@@ -41,11 +48,11 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-    }
+//    func insertNewObject(sender: AnyObject) {
+//        objects.insert(NewsItem(), atIndex: 0)
+//        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//    }
 
     // MARK: - Segues
 
@@ -72,7 +79,7 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> NewsTableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! NewsTableViewCell
 
-        let object = objects[indexPath.row] as! NewsItem
+        let object = objects[indexPath.row]
         switch object.category {
         case .World:
             cell.categoryLabel.textColor = .redColor()
