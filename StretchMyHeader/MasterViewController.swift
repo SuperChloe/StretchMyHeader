@@ -14,7 +14,9 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var stickyHeader: UIView!
     var detailViewController: DetailViewController? = nil
     var objects = [NewsItem]()
-    let kTableHeaderHeight: CGFloat = 250.0
+    let kTableHeaderHeight: CGFloat = 300.0
+    let kTableHeaderCutAway: CGFloat = 80.0
+    var headerMaskLayer: CAShapeLayer!
 
 
     override func viewDidLoad() {
@@ -30,6 +32,10 @@ class MasterViewController: UITableViewController {
         
         tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        
+        headerMaskLayer = CAShapeLayer()
+        headerMaskLayer.fillColor = UIColor.blackColor().CGColor
+        stickyHeader.layer.mask = headerMaskLayer
         updateStickyView()
         
         let currentDate = NSDate()
@@ -70,6 +76,13 @@ class MasterViewController: UITableViewController {
             headerRect.size.height = -tableView.contentOffset.y
         }
         stickyHeader.frame = headerRect
+        
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: 0, y: 0))
+        path.addLineToPoint(CGPoint(x: headerRect.width, y: 0))
+        path.addLineToPoint(CGPoint(x: headerRect.width, y: headerRect.height))
+        path.addLineToPoint(CGPoint(x: 0, y: headerRect.height-kTableHeaderCutAway))
+        headerMaskLayer?.path = path.CGPath
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
