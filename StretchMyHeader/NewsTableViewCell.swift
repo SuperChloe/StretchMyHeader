@@ -12,6 +12,18 @@ class NewsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var headlineLabel: UILabel!
+    var newsItem: NewsItem? {
+        didSet {
+            if let item = newsItem {
+                categoryLabel.text = item.category.toString()
+                categoryLabel.textColor = item.category.toColor()
+                headlineLabel.text = item.headline
+            } else {
+                categoryLabel.text = nil
+                headlineLabel.text = nil
+            }
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

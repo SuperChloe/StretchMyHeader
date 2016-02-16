@@ -10,13 +10,47 @@ import UIKit
 
 struct NewsItem {
     
-    enum Category: String {
-        case World = "World"
-        case Americas = "Americas"
-        case Europe = "Europe"
-        case MiddleEast = "Middle East"
-        case Africa = "Africa"
-        case AsiaPacific = "Asia Pacific"
+    enum Category {
+        case World
+        case Americas
+        case Europe
+        case MiddleEast
+        case Africa
+        case AsiaPacific
+        
+        func toString() -> String {
+            switch self {
+            case .World:
+                return "World"
+            case .Americas:
+                return "Americas"
+            case .Europe:
+                return "Europe"
+            case .MiddleEast:
+                return "Middle East"
+            case .Africa:
+                return "Africa"
+            case .AsiaPacific:
+                return "Asia Pacific"
+            }
+        }
+        
+        func toColor() -> UIColor {
+            switch self {
+            case .World:
+                return .redColor()
+            case .Americas:
+                return .blueColor()
+            case .Europe:
+                return .greenColor()
+            case .MiddleEast:
+                return .yellowColor()
+            case .Africa:
+                return .orangeColor()
+            case .AsiaPacific:
+                return .purpleColor()
+            }
+        }
     }
     var category: Category
     var headline: String

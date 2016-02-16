@@ -102,22 +102,7 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! NewsTableViewCell
 
         let object = objects[indexPath.row]
-        switch object.category {
-        case .World:
-            cell.categoryLabel.textColor = .redColor()
-        case .Americas:
-            cell.categoryLabel.textColor = .blueColor()
-        case .Europe:
-            cell.categoryLabel.textColor = .greenColor()
-        case .MiddleEast:
-            cell.categoryLabel.textColor = .yellowColor()
-        case .Africa:
-            cell.categoryLabel.textColor = .orangeColor()
-        case .AsiaPacific:
-            cell.categoryLabel.textColor = .purpleColor()
-        }
-        cell.categoryLabel!.text = object.category.rawValue
-        cell.headlineLabel!.text = object.headline
+        cell.newsItem = object
         return cell
     }
 
