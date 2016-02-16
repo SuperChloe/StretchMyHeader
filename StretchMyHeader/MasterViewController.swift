@@ -21,6 +21,16 @@ class MasterViewController: UITableViewController {
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
+        
+        let news1 = NewsItem(category: .World, headline: "Climate change protests, divestments meet fossil fuels realities")
+        let news2 = NewsItem(category: .Europe, headline: "Scotland's 'Yes' leader says independence vote is 'once in a lifetime'")
+        let news3 = NewsItem(category: .MiddleEast, headline:  "Airstrikes boost Islamic State, FBI director warns more hostages possible")
+        let news4 = NewsItem(category: .Africa, headline: "Nigeria says 70 dead in building collapse; questions S. Africa victim claim")
+        let news5 = NewsItem(category: .AsiaPacific, headline: "Despite UN ruling, Japan seeks backing for whale hunting")
+        let news6 = NewsItem(category: .Americas, headline: "Officials: FBI is tracking 100 Americans who fought alongside IS in Syria")
+        let news7 = NewsItem(category: .World, headline: "South Africa in $40 billion deal for Russian nuclear reactors")
+        let news8 = NewsItem(category: .Europe, headline: "'One million babies' created by EU student exchanges")
+        objects = [news1, news2, news3, news4, news5, news6, news7, news8]
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -56,16 +66,29 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-      //  return objects.count
+        return objects.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> NewsTableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! NewsTableViewCell
 
-  //      let object = objects[indexPath.row] as! NewsItem
-        cell.categoryLabel!.text = "World"
-        cell.headlineLabel!.text = "Climate change protests, divestments meet fossil fuels realities."
+        let object = objects[indexPath.row] as! NewsItem
+        switch object.category {
+        case .World:
+            cell.categoryLabel.textColor = .redColor()
+        case .Americas:
+            cell.categoryLabel.textColor = .blueColor()
+        case .Europe:
+            cell.categoryLabel.textColor = .greenColor()
+        case .MiddleEast:
+            cell.categoryLabel.textColor = .yellowColor()
+        case .Africa:
+            cell.categoryLabel.textColor = .orangeColor()
+        case .AsiaPacific:
+            cell.categoryLabel.textColor = .purpleColor()
+        }
+        cell.categoryLabel!.text = object.category.rawValue
+        cell.headlineLabel!.text = object.headline
         return cell
     }
 

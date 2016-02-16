@@ -10,12 +10,20 @@ import UIKit
 
 class NewsItem: NSObject {
     
-    var category: String
+    enum Category: String {
+        case World = "World"
+        case Americas = "Americas"
+        case Europe = "Europe"
+        case MiddleEast = "Middle East"
+        case Africa = "Africa"
+        case AsiaPacific = "Asia Pacific"
+    }
+    var category: Category
     var headline: String
     
     // MARK: Initialization
     
-    init(category: String, headline: String) {
+    init(category: Category, headline: String) {
         self.category = category
         self.headline = headline
     }
