@@ -30,8 +30,9 @@ class MasterViewController: UITableViewController {
         tableView.tableHeaderView = nil;
         tableView.addSubview(stickyHeader)
         
-        tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
-        tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        let effectiveHeight = kTableHeaderHeight - kTableHeaderCutAway / 2
+        tableView.contentInset = UIEdgeInsets(top: effectiveHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -effectiveHeight)
         
         headerMaskLayer = CAShapeLayer()
         headerMaskLayer.fillColor = UIColor.blackColor().CGColor
@@ -70,10 +71,11 @@ class MasterViewController: UITableViewController {
 //    }
     
     func updateStickyView() {
-        var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
-        if tableView.contentOffset.y < -kTableHeaderHeight {
+        let effectiveHeight = kTableHeaderHeight - kTableHeaderCutAway / 2
+        var headerRect = CGRect(x: 0, y: -effectiveHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
+        if tableView.contentOffset.y < -effectiveHeight {
             headerRect.origin.y = tableView.contentOffset.y
-            headerRect.size.height = -tableView.contentOffset.y
+            headerRect.size.height = -tableView.contentOffset.y + (kTableHeaderCutAway / 2)
         }
         stickyHeader.frame = headerRect
         
@@ -81,7 +83,7 @@ class MasterViewController: UITableViewController {
         path.moveToPoint(CGPoint(x: 0, y: 0))
         path.addLineToPoint(CGPoint(x: headerRect.width, y: 0))
         path.addLineToPoint(CGPoint(x: headerRect.width, y: headerRect.height))
-        path.addLineToPoint(CGPoint(x: 0, y: headerRect.height-kTableHeaderCutAway))
+        path.addLineToPoint(CGPoint(x: 0, y: headerRect.height - kTableHeaderCutAway))
         headerMaskLayer?.path = path.CGPath
     }
     
