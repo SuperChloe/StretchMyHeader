@@ -11,8 +11,10 @@ import UIKit
 class MasterViewController: UITableViewController {
 
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var stickyHeader: UIView!
     var detailViewController: DetailViewController? = nil
     var objects = [NewsItem]()
+    let kTableHeaderHeight: CGFloat = 250.0
 
 
     override func viewDidLoad() {
@@ -23,10 +25,17 @@ class MasterViewController: UITableViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         
+        tableView.tableHeaderView = nil;
+        tableView.addSubview(stickyHeader)
+        
+        tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        updateStickyView()
+        
         let currentDate = NSDate()
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-        var date = dateFormatter.stringFromDate(currentDate)
+        let date = dateFormatter.stringFromDate(currentDate)
         dateLabel.text = date
         
         let news1 = NewsItem(category: .World, headline: "Climate change protests, divestments meet fossil fuels realities")
@@ -53,13 +62,26 @@ class MasterViewController: UITableViewController {
 //        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 //        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 //    }
+    
+    func updateStickyView() {
+        var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
+        if tableView.contentOffset.y < -kTableHeaderHeight {
+            headerRect.origin.y = tableView.contentOffset.y
+            headerRect.size.height = -tableView.contentOffset.y
+        }
+        stickyHeader.frame = headerRect
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        updateStickyView()
+    }
 
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
+                let object = objects[indexPath.row]
                 let controller = segue.destinationViewController as! DetailViewController
                 controller.detailItem = object
             }
@@ -120,7 +142,6 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-
 
 }
 

@@ -144,6 +144,7 @@
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
                     <connections>
                         <outlet property="dateLabel" destination="955-rk-pio" id="gBJ-Pe-CJv"/>
+                        <outlet property="stickyHeader" destination="cqQ-Oc-CiE" id="e7j-mn-qpc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
